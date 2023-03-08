@@ -32,12 +32,15 @@
 
             builder.HasKey(p => p.Id);
 
+            // Having one owned property of the Address Type on the Contact model works fine
             builder.OwnsOne(a => a.PhysicalAddress, a =>
             {
                 a.Property(s => s.StreetAddress).HasMaxLength(50);
                 a.Property(s => s.CityStateZip).HasMaxLength(100);
             });
 
+            // After adding a second instance, these properties are no longer populated
+            // when attempting to use Bulk Extension to do a Bulk Insert
             builder.OwnsOne(a => a.MailingAddress, a =>
             {
                 a.Property(s => s.StreetAddress).HasMaxLength(50);
@@ -66,8 +69,8 @@
     public abstract class Contact
     {
         public int Id { get; set; }
-        public Address PhysicalAddress { get; set; }
-        public Address MailingAddress { get; set; }
+        public Address PhysicalAddress { get; set; } // owned type
+        public Address MailingAddress { get; set; } // owned type
 
     }
 
