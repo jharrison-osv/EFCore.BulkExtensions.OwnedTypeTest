@@ -42,6 +42,8 @@ for (var i = 1; i <= 100; i++)
     people.Add(person);
 }
 
+// this will currently fail because the PhysicalAddress and MailingAddress fields in the database are required
+// but are not currently being populated by Bulk Extensions during a Bulk Insert
 db.BulkInsert(people);
 
 var businesses = new List<Business>();
